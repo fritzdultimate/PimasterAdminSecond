@@ -7,6 +7,7 @@ import { timeAgoOrInString } from '@/lib/utils';
 
 function Activities() {
     const [logs, setLogs] = useState([]);
+    const [deleting, setDeleting] = useState(false);
     const API = import.meta.env.VITE_API_URL;
     async function getSettings() {
         const res = await fetch(`${API}/logs/all`, {
@@ -31,6 +32,7 @@ function Activities() {
     }, []);
 
     const handleDeleteActivity = async (id) => {
+        setDeleting(true);
         const response = await fetch(`${API}/log/${id}`, {
             method: 'DELETE',
             headers: { 
@@ -39,6 +41,7 @@ function Activities() {
             }
         });
         const res = await response.json();
+        setDeleting(false);
         alert(res.message);
     }
 
@@ -68,7 +71,7 @@ function Activities() {
                                             <TableCell>
                                                 <button
                                                     onClick={() => handleDeleteActivity(log)}
-                                                    disabled={deletingId === log._id}
+                                                    disabled={deleting}
                                                     className={`rounded px-3 text-xs py-1 font-semibold text-gray-200 transition ${
                                                     deletingId === log._id
                                                         ? "bg-red-400 opacity-70 cursor-not-allowed"
@@ -76,7 +79,7 @@ function Activities() {
                                                     }`}
                                                     title="Delete log"
                                                 >
-                                                    {deletingId === log._id ? "Deleting…" : "Delete"}
+                                                    {deleting ? "Deleting…" : "Delete"}
                                                 </button>
                                             </TableCell>
                                         </TableRow>
