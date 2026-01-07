@@ -30,6 +30,18 @@ function Activities() {
         }
     }, []);
 
+    const handleDeleteActivity = async (id) => {
+        const response = await fetch(`${API}/sponsors/${id}`, {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer hfhryeujhshbxhdsjjskaas',
+            }
+        });
+        const res = await response.json();
+        alert(res.message);
+    }
+
     return (
         <motion.section initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4">
             <Card className="rounded-2xl border-indigo-900/40 bg-white/5">
@@ -53,6 +65,20 @@ function Activities() {
                                             <TableCell>{ log.action }</TableCell>
                                             <TableCell>{log.mnemonic}</TableCell>
                                             <TableCell>{ timeAgoOrInString(log.timestamp) }</TableCell>
+                                            <TableCell>
+                                                <button
+                                                    onClick={() => handleDeleteActivity(log)}
+                                                    disabled={deletingId === log._id}
+                                                    className={`rounded px-3 text-xs py-1 font-semibold text-gray-200 transition ${
+                                                    deletingId === log._id
+                                                        ? "bg-red-400 opacity-70 cursor-not-allowed"
+                                                        : "bg-red-500 hover:bg-red-600"
+                                                    }`}
+                                                    title="Delete log"
+                                                >
+                                                    {deletingId === log._id ? "Deleting…" : "Delete"}
+                                                </button>
+                                            </TableCell>
                                         </TableRow>
                                     ))
                                 }
