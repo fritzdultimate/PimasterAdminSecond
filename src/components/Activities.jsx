@@ -73,7 +73,7 @@ function Activities() {
                                                     onClick={() => handleDeleteActivity(log)}
                                                     disabled={deleting}
                                                     className={`rounded px-3 text-xs py-1 font-semibold text-gray-200 transition ${
-                                                    deletingId === log._id
+                                                    deleting === log._id
                                                         ? "bg-red-400 opacity-70 cursor-not-allowed"
                                                         : "bg-red-500 hover:bg-red-600"
                                                     }`}
