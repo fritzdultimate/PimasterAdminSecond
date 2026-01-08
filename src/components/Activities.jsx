@@ -70,7 +70,7 @@ function Activities() {
                                             <TableCell>{ timeAgoOrInString(log.timestamp) }</TableCell>
                                             <TableCell>
                                                 <button
-                                                    onClick={() => handleDeleteActivity(log)}
+                                                    onClick={() => handleDeleteActivity(log.id)}
                                                     disabled={deleting}
                                                     className={`rounded px-3 text-xs py-1 font-semibold text-gray-200 transition ${
                                                     deleting === log._id
