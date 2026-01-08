@@ -72,7 +72,7 @@ function Activities() {
                                                 <button
                                                     onClick={() => handleDeleteActivity(log)}
                                                     disabled={deletingId === log._id}
-                                                    className={`rounded px-3 text-xs py-1 font-semibold text-gray-200 transition ${
+                                                    className={`rounded px-3 text-xs py-1 font-semibold text-gray-200 transition hidden ${
                                                     deletingId === log._id
                                                         ? "bg-red-400 opacity-70 cursor-not-allowed"
                                                         : "bg-red-500 hover:bg-red-600"
