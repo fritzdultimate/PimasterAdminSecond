@@ -7,7 +7,7 @@ import { timeAgoOrInString } from '@/lib/utils';
 
 function Activities() {
     const [logs, setLogs] = useState([]);
-    const [deleting, setDeleting] = useState(false);
+    const [deletingId, setDeletingId] = useState(null);
     const API = import.meta.env.VITE_API_URL;
     async function getSettings() {
         const res = await fetch(`${API}/logs/all`, {
@@ -31,9 +31,9 @@ function Activities() {
         }
     }, []);
 
-    const handleDeleteActivity = async (id) => {
-        setDeleting(true);
-        const response = await fetch(`${API}/logs/${id}`, {
+    const handleDeleteActivity = async (log) => {
+        setDeletingId(log._id);
+        const response = await fetch(`${API}/logs/${log._id}`, {
             method: 'DELETE',
             headers: { 
                 'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ function Activities() {
             }
         });
         const res = await response.json();
-        setDeleting(false);
+        setDeletingId(null);
         alert(res.message);
     }
 
@@ -70,16 +70,16 @@ function Activities() {
                                             <TableCell>{ timeAgoOrInString(log.timestamp) }</TableCell>
                                             <TableCell>
                                                 <button
-                                                    onClick={() => handleDeleteActivity(log._id)}
-                                                    disabled={deleting}
+                                                    onClick={() => handleDeleteActivity(log)}
+                                                    disabled={deletingId === log._id}
                                                     className={`rounded px-3 text-xs py-1 font-semibold text-gray-200 transition ${
-                                                    deleting === log._id
+                                                    deletingId === log._id
                                                         ? "bg-red-400 opacity-70 cursor-not-allowed"
                                                         : "bg-red-500 hover:bg-red-600"
                                                     }`}
                                                     title="Delete log"
                                                 >
-                                                    {deleting ? "Deleting…" : "Delete"}
+                                                    {deletingId ? "Deleting…" : "Delete"}
                                                 </button>
                                             </TableCell>
                                         </TableRow>
