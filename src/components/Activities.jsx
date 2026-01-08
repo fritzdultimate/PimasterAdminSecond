@@ -33,7 +33,7 @@ function Activities() {
 
     const handleDeleteActivity = async (id) => {
         setDeleting(true);
-        const response = await fetch(`${API}/log/${id}`, {
+        const response = await fetch(`${API}/logs/${id}`, {
             method: 'DELETE',
             headers: { 
                 'Content-Type': 'application/json',
